@@ -1,14 +1,20 @@
 <?php
+namespace IceBird\Twitter;
 
-class Twitter{
-    private $apiToken;
-    private $user;
+class Twitter extends Request
+{
+    private $auth;
 
-    public function __construct($apiToken,$user)
+    public function __construct(Authentication $auth)
     {
-        $this->apiToken = $apiToken;
-        $this->user = $user;
+        $this->auth = $auth;
     }
 
+    public function get($array=array())
+    {
+
+    }
+
+    public function set($array=array()){}
 }
 
