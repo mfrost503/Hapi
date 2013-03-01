@@ -39,12 +39,10 @@ class OAuth implements \IceBird\Authentication
         }
         $timestamp = time();
         $oauth = array(
-            'oauth_nonce' => $this->nonce,
-            'oauth_callback'=>$this->callback,
+            'oauth_nonce' => $this->nonce,            'oauth_callback'=>$this->callback,
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => $timestamp,
             'oauth_consumer_key' => $this->consumerToken,
-            'oauth_signature' => '',
             'oauth_version' => '1.0'
         );
         return $oauth;
@@ -53,6 +51,7 @@ class OAuth implements \IceBird\Authentication
     private function buildBaseString($params,$baseUrl="https://api.twitter.com/oauth/request_token")
     {
         $temp_array = array();
+        ksort($params);
         foreach($params as $key => $value){
             $temp_array[] = $key . '=' . rawurlencode($value);
         }
@@ -91,7 +90,8 @@ class OAuth implements \IceBird\Authentication
             $header = array($this->buildAuthHeader($params), 'Expect:');
             $options = array(
                 CURLOPT_HTTPHEADER => $header,
-                CURLOPT_HEADER => false,
+                CURLOPT_HEADER =>false,
+                CURLOPT_POSTFIELDS => '',
                 CURLOPT_URL => 'https://api.twitter.com/oauth/request_token',
                 CURLOPT_POST => true,
                 CURLOPT_RETURNTRANSFER => true,
@@ -99,7 +99,6 @@ class OAuth implements \IceBird\Authentication
 
             $curl = curl_init();
             curl_setopt_array($curl,$options);
-            exit($this->buildAuthHeader($params));
             $response = curl_exec($curl);
             curl_close($curl);
             return $response;
