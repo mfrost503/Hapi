@@ -1,7 +1,7 @@
 <?php
 namespace IceBird\Twitter;
 
-class OAuth
+class OAuthAccess
 {
     /**
      * @var accessToken
