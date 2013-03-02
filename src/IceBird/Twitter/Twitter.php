@@ -8,7 +8,7 @@ abstract class Twitter
     protected function get($uri,$header)
     {
         $url = $this->baseUrl . $uri;
-        $headers = $this->header->getAuthHeader($url);
+        $header = $this->header->setRequestUrl($url);
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_POST,false);
         curl_setopt($curl,CURLOPT_HTTPHEADER,$header);

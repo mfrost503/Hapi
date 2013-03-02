@@ -16,6 +16,4 @@ class Tweet extends Twitter
         $this->get('statuses/retweets/'.$id.'.json',$this->header);
     }
 
-    public function 
-
 }

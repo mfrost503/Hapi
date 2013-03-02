@@ -29,6 +29,7 @@ class OAuthHeader
      * The URL request being sent to twiiter
      */
     private $requestUrl;
+    private $callback='';
 
     public function __construct(OAuthAccess $oauthAccess,OAuthConsumer $oauthConsumer)
     {
@@ -73,10 +74,7 @@ class OAuthHeader
         {
             $this->nonce = time();
         }
-        if(empty($this->callback))
-        {
-            return false;
-        }
+
         if(empty($this->oauthConsumer->getConsumerSecret))
         {
             return false;
@@ -148,10 +146,10 @@ class OAuthHeader
         return base64_encode(hash_hmac('sha1',$baseString,$compositeKey,true));
     }
 
-    public function getAuthHeader($url)
+    public function getAuthHeader()
     {
         $params = $this->setHeaderInfo();
-        $baseString = $this->buildBaseString($params,$url);
+        $baseString = $this->buildBaseString($params,$this->requestUrl);
         $compositeKey = $this->getCompositeKey($this->oauthAccess->getAccessToken());
         $params['oauth_signature'] = $this->buildSignature($baseString,$compositeKey);
         return $this->buildAuthHeader($params);
