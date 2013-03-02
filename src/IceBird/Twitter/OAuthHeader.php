@@ -3,13 +3,14 @@ namespace IceBird\Twitter;
 
 class OAuthHeader
 {
+    private $headerArray;
     /**
      * @var OAuthAccess oauthAccess
      * An oauthAccess instance that holds the users
      * oauth_access_token/secret
      */
     private $oauthAccess;
-
+    private $httpVerb ='GET';
     /**
      * @var nonce
      * Unique value to send as part of the header
@@ -50,6 +51,10 @@ class OAuthHeader
      * @param $url
      * Set the requestUrl property
      */
+    public function setHTTPVerb($verb)
+    {
+        $this->httpVerb = $verb;
+    }
     public function setRequestUrl($url)
     {
         $this->requestUrl = $url;
@@ -74,11 +79,6 @@ class OAuthHeader
         {
             $this->nonce = time();
         }
-
-        if(empty($this->oauthConsumer->getConsumerSecret))
-        {
-            return false;
-        }
         $timestamp = time();
         $oauth = array(
             'oauth_nonce' => $this->nonce,
@@ -86,8 +86,12 @@ class OAuthHeader
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => $timestamp,
             'oauth_consumer_key' => $this->oauthConsumer->getConsumerKey(),
+            'oauth_token' => $this->oauthAccess->getAccessToken(),
             'oauth_version' => '1.0'
         );
+        if($this->callback == '') {
+            unset($oauth['oauth_callback']); 
+        }
         return $oauth;
     }
 
@@ -105,7 +109,7 @@ class OAuthHeader
         foreach($params as $key => $value){
             $temp_array[] = $key . '=' . rawurlencode($value);
         }
-        return "POST&" .rawurlencode($baseUrl) . '&' . rawurlencode(implode('&',$temp_array));
+        return "$this->httpVerb&" .rawurlencode($baseUrl) . '&' . rawurlencode(implode('&',$temp_array));
     }
 
     /**
@@ -115,7 +119,7 @@ class OAuthHeader
      */
     private function getCompositeKey($requestToken=null)
     {
-        return rawurlencode($this->consumerSecret) . '&' . rawurlencode($requestToken);
+        return rawurlencode($this->oauthConsumer->getConsumerSecret()) . '&' . rawurlencode($this->oauthAccess->getAccessSecret());
     }
 
     /**
@@ -152,6 +156,7 @@ class OAuthHeader
         $baseString = $this->buildBaseString($params,$this->requestUrl);
         $compositeKey = $this->getCompositeKey($this->oauthAccess->getAccessToken());
         $params['oauth_signature'] = $this->buildSignature($baseString,$compositeKey);
+        $this->headerArray = $params;
         return $this->buildAuthHeader($params);
     }
 

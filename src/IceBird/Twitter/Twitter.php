@@ -8,11 +8,13 @@ abstract class Twitter
     protected function get($uri,$header)
     {
         $url = $this->baseUrl . $uri;
-        $header = $this->header->setRequestUrl($url);
+        $header->setRequestUrl($url);
+        $headers = $header->getAuthHeader();
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_POST,false);
-        curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
+        curl_setopt($curl,CURLOPT_HTTPHEADER,array($headers,'Expects:'));
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl,CURLOPT_HEADER,false);
         curl_setopt($curl,CURLOPT_URL,$url);
         $response = curl_exec($curl);
         curl_close($curl);
@@ -21,9 +23,13 @@ abstract class Twitter
 
     protected function post($uri,$header,$postFields)
     {
+        $url = $this->baseUrl . $uri;
+        $header->setHTTPVerb('POST');
+        $header->setRequestUrl($url);
+        $headers = $header->getAuthHeader();
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_POST,true);
-        curl_setopt($curl,CURLOPT_HTTPHEADER,$header);
+        curl_setopt($curl,CURLOPT_HTTPHEADER,array($headers,'Expects:'));
         curl_setopt($curl,CURLOPT_POSTFIELDS,$postFields);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($curl,CURLOPT_URL,$this->baseUrl . $uri);
