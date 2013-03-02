@@ -3,7 +3,7 @@ namespace IceBird\Twitter;
 
 class Tweet extends Twitter
 {
-    private $header;
+    protected $header;
 
     public function __construct(OAuthHeader $header)
     {
