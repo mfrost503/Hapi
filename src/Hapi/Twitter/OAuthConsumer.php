@@ -1,5 +1,5 @@
 <?php
-namespace IceBird\Twitter;
+namespace Hapi\Twitter;
 
 class OAuthConsumer
 {

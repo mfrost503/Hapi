@@ -1,15 +1,19 @@
 <?php
-namespace IceBird\Twitter;
+namespace Hapi\Twitter;
 
 class OAuthHeader
 {
-    private $headerArray;
     /**
      * @var OAuthAccess oauthAccess
      * An oauthAccess instance that holds the users
      * oauth_access_token/secret
      */
     private $oauthAccess;
+
+    /**
+     * @var string httpVerb
+     * Default HTTP Verb for the baseString
+     */
     private $httpVerb ='GET';
     /**
      * @var nonce
@@ -48,13 +52,18 @@ class OAuthHeader
     }
 
     /**
-     * @param $url
-     * Set the requestUrl property
+     * @param $verb
+     * Sets the httpVerb property for the baseString
      */
     public function setHTTPVerb($verb)
     {
         $this->httpVerb = $verb;
     }
+
+    /**
+     * @param $url
+     * Set the requestUrl property
+     */
     public function setRequestUrl($url)
     {
         $this->requestUrl = $url;
@@ -73,7 +82,7 @@ class OAuthHeader
      * compile the header information to create
      * the request headers
      */
-    private function setHeaderInfo()
+    public function setHeaderInfo()
     {
         if(empty($this->nonce))
         {
@@ -97,27 +106,25 @@ class OAuthHeader
 
     /**
      * @param $params
-     * @param string $baseUrl
      * @return string
      * Takes the params from the previous step and the base url
      * and creates the base string
      */
-    private function buildBaseString($params,$baseUrl="https://api.twitter.com/oauth/request_token")
+    public function buildBaseString($params)
     {
         $temp_array = array();
         ksort($params);
         foreach($params as $key => $value){
             $temp_array[] = $key . '=' . rawurlencode($value);
         }
-        return "$this->httpVerb&" .rawurlencode($baseUrl) . '&' . rawurlencode(implode('&',$temp_array));
+        return "$this->httpVerb&" .rawurlencode($this->requestUrl) . '&' . rawurlencode(implode('&',$temp_array));
     }
 
     /**
-     * @param null $requestToken
      * @return string
      * Creates the composite key
      */
-    private function getCompositeKey($requestToken=null)
+    public function getCompositeKey()
     {
         return rawurlencode($this->oauthConsumer->getConsumerSecret()) . '&' . rawurlencode($this->oauthAccess->getAccessSecret());
     }
@@ -127,7 +134,7 @@ class OAuthHeader
      * @return string
      * Builds the authorization header to send to twitter
      */
-    private function buildAuthHeader($params)
+    public function buildAuthHeader($params)
     {
         $headerPrefix = "Authorization: OAuth ";
         $values = array();
@@ -145,7 +152,7 @@ class OAuthHeader
      * Users the previously created baseString and compositeKey
      * to sign the request
      */
-    private function buildSignature($baseString,$compositeKey)
+    public function buildSignature($baseString,$compositeKey)
     {
         return base64_encode(hash_hmac('sha1',$baseString,$compositeKey,true));
     }
@@ -153,10 +160,9 @@ class OAuthHeader
     public function getAuthHeader()
     {
         $params = $this->setHeaderInfo();
-        $baseString = $this->buildBaseString($params,$this->requestUrl);
-        $compositeKey = $this->getCompositeKey($this->oauthAccess->getAccessToken());
+        $baseString = $this->buildBaseString($params);
+        $compositeKey = $this->getCompositeKey();
         $params['oauth_signature'] = $this->buildSignature($baseString,$compositeKey);
-        $this->headerArray = $params;
         return $this->buildAuthHeader($params);
     }
 
