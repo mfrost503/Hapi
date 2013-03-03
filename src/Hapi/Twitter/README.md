@@ -24,7 +24,7 @@ The Tweet class allows you to send tweets and/or get information on Tweets, so b
 above, setting up the Tweet object is pretty easy!
 
     $tweet = new Tweet($oauthHeader);
-    
+
 Once we have our instance we can make the following calls:
 
     //getRetweets
@@ -37,3 +37,19 @@ Once we have our instance we can make the following calls:
     $tweet->retrieve($statusId);
     //search
     $tweet->search(array('q'=>'searchQuery','count'=>100));
+
+### Direct Messages
+The DirectMessage class allows you to send, receive and delete direct messages - setting up a DirectMessage instance is
+similar to setting up a tweet
+
+    $directMessage = new DirectMessage($oauthHeader);
+
+Once the instance is ready, the following interface is available:
+
+    $directMessage->retrieveAll();
+    $directMessage->retrieve($id);
+    $directMessage->retrieveSent();
+    $directMessage->delete($id);
+    $directMessage->create(array('user_id'=>$user_id,'screen_name'=>$screen_name,'text'=>$text));
+
+    
