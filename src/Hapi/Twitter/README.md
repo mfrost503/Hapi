@@ -7,7 +7,7 @@ broken up logically, so there is no confusion.
 Getting started is pretty straight-forward, we take the consumer secret and access tokens required to build the OAuth
 header:
 
-    ```php
+    <?php
     namespace Hapi\Twitter;
 
     $oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
@@ -16,7 +16,7 @@ header:
     $oauthHeader = new OAuthHeader($oauthAccess, $oauthConsumer);
     /* If the call you are making requires a callback (request_token - for example) */
     $oauthHeader->setCallback('http://example.org/callback'); // your application callback url
-    ```
+
 In 4 or 5 lines of code, you have your OAuth header configured and can start making requests!
 
 ### Tweets
@@ -25,7 +25,6 @@ above, setting up the Tweet object is pretty easy!
 $tweet = new Tweet($oauthHeader);
 Once we have our instance we can make the following calls:
 
-    ```php
     //getRetweets
     $tweet->getRetweets($statusId);
     //tweet
@@ -36,4 +35,3 @@ Once we have our instance we can make the following calls:
     $tweet->retrieve($statusId);
     //search
     $tweet->search(array('q'=>'searchQuery','count'=>100));
-    ```
