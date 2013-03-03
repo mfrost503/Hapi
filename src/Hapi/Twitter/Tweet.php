@@ -13,7 +13,7 @@ class Tweet extends Twitter
      * @param OAuthHeader $header
      * Sets the header property
      */
-    public function __construct(OAuthHeader $header)
+    public function __construct(\Hapi\OAuth\OAuthHeader $header)
     {
         $this->header = $header;
     }

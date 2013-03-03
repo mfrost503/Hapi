@@ -1,5 +1,5 @@
 <?php
-namespace Hapi\Twitter;
+namespace Hapi\OAuth;
 
 class OAuthAccessTest extends \PHPUnit_Framework_TestCase
 {

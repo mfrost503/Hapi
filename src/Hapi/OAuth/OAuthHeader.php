@@ -1,5 +1,5 @@
 <?php
-namespace Hapi\Twitter;
+namespace Hapi\OAuth;
 
 class OAuthHeader
 {

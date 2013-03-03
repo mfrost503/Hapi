@@ -5,7 +5,7 @@ class DirectMessage extends Twitter
 {
     protected $header;
 
-    public function __construct(OAuthHeader $header)
+    public function __construct(\Hapi\OAuth\OAuthHeader $header)
     {
         $this->header = $header;
     }

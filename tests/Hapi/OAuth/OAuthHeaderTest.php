@@ -1,14 +1,14 @@
 <?php
-namespace Hapi\Twitter;
+namespace Hapi\OAuth;
 
 class OAuthHeaderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->consumer = $this->getMockBuilder('\Hapi\Twitter\OAuthConsumer',array('getConsumerSecret','getConsumerToken'))
+        $this->consumer = $this->getMockBuilder('\Hapi\OAuth\OAuthConsumer',array('getConsumerSecret','getConsumerToken'))
             ->disableOriginalConstructor()
             ->getMock();
-        $this->access = $this->getMockBuilder('\Hapi\Twitter\OAuthAccess',array('getAccessSecret','getAccessToken'))
+        $this->access = $this->getMockBuilder('\Hapi\OAuth\OAuthAccess',array('getAccessSecret','getAccessToken'))
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -6,17 +6,17 @@ broken up logically, so there is no confusion.
 ### Getting started
 Getting started is pretty straight-forward, we take the consumer secret and access tokens required to build the OAuth
 header:
+```php
+<?php
+namespace Hapi\Twitter;
 
-    <?php
-    namespace Hapi\Twitter;
+$oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
+$oauthConsumer = new OAuthConsumer('<insert consumer_key>','<insert consumer_secret>');
 
-    $oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
-    $oauthConsumer = new OAuthConsumer('<insert consumer_key>','<insert consumer_secret>');
-
-    $oauthHeader = new OAuthHeader($oauthAccess, $oauthConsumer);
-    /* If the call you are making requires a callback (request_token - for example) */
-    $oauthHeader->setCallback('http://example.org/callback'); // your application callback url
-
+$oauthHeader = new OAuthHeader($oauthAccess, $oauthConsumer);
+/* If the call you are making requires a callback (request_token - for example) */
+$oauthHeader->setCallback('http://example.org/callback'); // your application callback url
+```
 In 4 or 5 lines of code, you have your OAuth header configured and can start making requests!
 
 ### Tweets
@@ -52,4 +52,3 @@ Once the instance is ready, the following interface is available:
     $directMessage->delete($id);
     $directMessage->create(array('user_id'=>$user_id,'screen_name'=>$screen_name,'text'=>$text));
 
-    
