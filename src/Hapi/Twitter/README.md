@@ -6,7 +6,6 @@ broken up logically, so there is no confusion.
 ### Getting started
 Getting started is pretty straight-forward, we take the consumer secret and access tokens required to build the OAuth
 header:
-    <?php
     namespace Hapi\Twitter;
 
     $oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
