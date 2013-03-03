@@ -8,7 +8,7 @@ Getting started is pretty straight-forward, we take the consumer secret and acce
 header:
 ```php
 <?php
-namespace Hapi\Twitter;
+namespace Hapi\OAuth;
 
 $oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
 $oauthConsumer = new OAuthConsumer('<insert consumer_key>','<insert consumer_secret>');
@@ -22,33 +22,29 @@ In 4 or 5 lines of code, you have your OAuth header configured and can start mak
 ### Tweets
 The Tweet class allows you to send tweets and/or get information on Tweets, so by setting up the headers described
 above, setting up the Tweet object is pretty easy!
-
-    $tweet = new Tweet($oauthHeader);
-
+```php
+$tweet = new Tweet($oauthHeader);
+```
 Once we have our instance we can make the following calls:
-
-    //getRetweets
-    $tweet->getRetweets($statusId);
-    //tweet
-    $tweet->tweet(array('status'=>'This call will post a tweet for authorized user'));
-    //delete
-    $tweet->delete($statusId);
-    retrieve
-    $tweet->retrieve($statusId);
-    //search
-    $tweet->search(array('q'=>'searchQuery','count'=>100));
-
+```php
+$tweet->getRetweets($statusId);
+$tweet->tweet(array('status'=>'This call will post a tweet for authorized user'));
+$tweet->delete($statusId);
+$tweet->retrieve($statusId);
+$tweet->search(array('q'=>'searchQuery','count'=>100));
+```
 ### Direct Messages
 The DirectMessage class allows you to send, receive and delete direct messages - setting up a DirectMessage instance is
 similar to setting up a tweet
-
-    $directMessage = new DirectMessage($oauthHeader);
-
+```php
+$directMessage = new DirectMessage($oauthHeader);
+```
 Once the instance is ready, the following interface is available:
-
-    $directMessage->retrieveAll();
-    $directMessage->retrieve($id);
-    $directMessage->retrieveSent();
-    $directMessage->delete($id);
-    $directMessage->create(array('user_id'=>$user_id,'screen_name'=>$screen_name,'text'=>$text));
+```php
+$directMessage->retrieveAll();
+$directMessage->retrieve($id);
+$directMessage->retrieveSent();
+$directMessage->delete($id);
+$directMessage->create(array('user_id'=>$user_id,'screen_name'=>$screen_name,'text'=>$text));
+```
 
