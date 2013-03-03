@@ -22,9 +22,14 @@ The Tweet class allows you to send tweets and/or get information on Tweets, so b
 above, setting up the Tweet object is pretty easy!
 $tweet = new Tweet($oauthHeader);
 Once we have our instance we can make the following calls:
-getRetweets - $tweet->getRetweets($statusId);
-tweet - $tweet->tweet(array('status'=>'This call will post a tweet for authorized user'));
-delete - $tweet->delete($statusId);
-retrieve - $tweet->retrieve($statusId);
-search - $tweet->search(array('q'=>'searchQuery','count'=>100));
+    //getRetweets
+    $tweet->getRetweets($statusId);
+    //tweet
+    $tweet->tweet(array('status'=>'This call will post a tweet for authorized user'));
+    //delete
+    $tweet->delete($statusId);
+    retrieve
+    $tweet->retrieve($statusId);
+    //search
+    $tweet->search(array('q'=>'searchQuery','count'=>100));
 
