@@ -6,6 +6,7 @@ broken up logically, so there is no confusion.
 ### Getting started
 Getting started is pretty straight-forward, we take the consumer secret and access tokens required to build the OAuth
 header:
+
     ```php
     namespace Hapi\Twitter;
 
@@ -23,6 +24,7 @@ The Tweet class allows you to send tweets and/or get information on Tweets, so b
 above, setting up the Tweet object is pretty easy!
 $tweet = new Tweet($oauthHeader);
 Once we have our instance we can make the following calls:
+
     ```php
     //getRetweets
     $tweet->getRetweets($statusId);
