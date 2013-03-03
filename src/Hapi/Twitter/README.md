@@ -22,7 +22,9 @@ In 4 or 5 lines of code, you have your OAuth header configured and can start mak
 ### Tweets
 The Tweet class allows you to send tweets and/or get information on Tweets, so by setting up the headers described
 above, setting up the Tweet object is pretty easy!
-$tweet = new Tweet($oauthHeader);
+
+    $tweet = new Tweet($oauthHeader);
+    
 Once we have our instance we can make the following calls:
 
     //getRetweets
