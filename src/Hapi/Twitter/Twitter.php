@@ -1,13 +1,28 @@
 <?php
 namespace Hapi\Twitter;
+use \Hapi\OAuth as OAuth;
 
-abstract class Twitter
+class Twitter
 {
     protected $baseUrl = "https://api.twitter.com/1.1/";
+    protected $header;
 
-    protected function get($uri)
+    public function __construct(OAuth\OAuthHeader $header) {
+        $this->header = $header;
+    }
+
+    public function get($uri,$params=array())
     {
-        $url = $this->baseUrl . $uri;
+        $queryString = '';
+        $values = array();
+        foreach($params as $key => $value) {
+            $values[] = rawurlencode($key) . '=' . rawurlencode($value);
+        }
+        if(!empty($values)) {
+            $queryString .= '?';
+        }
+        $queryString .= implode("&",$values);
+        $url = $this->baseUrl . $uri . $queryString;
         $this->header->setRequestUrl($url);
         $headers = $this->header->getAuthHeader();
         $curl = curl_init();
@@ -21,7 +36,7 @@ abstract class Twitter
         return $response;
     }
 
-    protected function post($uri,$postFields)
+    public function post($uri,$postFields)
     {
         $url = $this->baseUrl . $uri;
         $this->header->setHTTPVerb('POST');

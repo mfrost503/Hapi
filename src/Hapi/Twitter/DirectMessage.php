@@ -1,13 +1,13 @@
 <?php
 namespace Hapi\Twitter;
+use \Hapi\OAuth as OAuth;
 
 class DirectMessage extends Twitter
 {
-    protected $header;
 
-    public function __construct(\Hapi\OAuth\OAuthHeader $header)
+    public function __construct(OAuth\OAuthHeader $header)
     {
-        $this->header = $header;
+        parent::__construct($header);
     }
 
     public function retrieveAll()

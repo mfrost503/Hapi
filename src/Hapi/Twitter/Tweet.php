@@ -1,21 +1,21 @@
 <?php
 namespace Hapi\Twitter;
-
+use \Hapi\OAuth as OAuth;
 class Tweet extends Twitter
 {
     /**
-     * @var OAuthHeader $header
+     * @var \Hapi\Twitter\OAuthHeader $header
      * Header instance to sign and authenticate the request
      */
-    protected $header;
+
 
     /**
-     * @param OAuthHeader $header
+     * @param $header
      * Sets the header property
      */
-    public function __construct(\Hapi\OAuth\OAuthHeader $header)
+    public function __construct(OAuth\OAuthHeader $header)
     {
-        $this->header = $header;
+        parent::__construct($header);
     }
 
     /**
@@ -72,6 +72,7 @@ class Tweet extends Twitter
      */
     public function search(Array $params)
     {
+        $values = array();
         foreach($params as $key=>$value) {
             $values[] = "$key=$value";
         }
