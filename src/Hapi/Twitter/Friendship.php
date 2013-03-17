@@ -5,11 +5,6 @@ use \Hapi\OAuth as OAuth;
 class Friendship extends Twitter
 {
 
-    public function __construct(OAuth\OAuthHeader $header)
-    {
-        parent::__construct($header);
-    }
-
     public function getNoRetweets(Array $params=array())
     {
         $response = $this->get('friendships/no_retweets/id.json',$params);

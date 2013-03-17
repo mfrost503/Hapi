@@ -5,11 +5,6 @@ use \Hapi\OAuth as OAuth;
 class DirectMessage extends Twitter
 {
 
-    public function __construct(OAuth\OAuthHeader $header)
-    {
-        parent::__construct($header);
-    }
-
     public function retrieveAll()
     {
         $response = $this->get('direct_messages.json');

@@ -3,20 +3,6 @@ namespace Hapi\Twitter;
 use \Hapi\OAuth as OAuth;
 class Tweet extends Twitter
 {
-    /**
-     * @var \Hapi\Twitter\OAuthHeader $header
-     * Header instance to sign and authenticate the request
-     */
-
-
-    /**
-     * @param $header
-     * Sets the header property
-     */
-    public function __construct(OAuth\OAuthHeader $header)
-    {
-        parent::__construct($header);
-    }
 
     /**
      * @param $id
