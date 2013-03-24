@@ -47,4 +47,34 @@ $directMessage->retrieveSent();
 $directMessage->delete($id);
 $directMessage->create(array('user_id'=>$user_id,'screen_name'=>$screen_name,'text'=>$text));
 ```
-
+### Friendships
+The Friendships class allows you to create new friendships (follow) remove existing friendships (unfollow) and get
+information about friendships
+```php
+$friendship = new Friendship($oauthHeader);
+```
+Once the instance is ready the following interface is available:
+```php
+//retrieve all the followers that the authenticated user doesn't receive retweets from
+$friendship->retrieveNoRetweets(array('stringify_ids'=>true));
+//retrieve all users that you follow and follow you optionally filter by user id, screen name
+$friendship->retrieveFriends(array(
+                                 'user_id'=>'1234',
+                                 'screen_name'=>'username',
+                                 'cursor' => 1
+                                 'stringify_ids' => true,
+                                 'count'=>1000
+                             ));
+//retrieve followers for the provided user (screen_name or user_id)
+$friendship->retrieveFollowers(array(
+                                   'user_id' => 1234,
+                                   'screen_name' => 'username',
+                                   'cursor'=>1,
+                                   'stringify_ids'=>false,
+                                   'count'=>1000
+                               ));
+//follow a new user by screen name or id and set follow to initiate a notification (boolean)
+$friendship->follow(array('user_id'='1234','screen_name'=>'username','follow'=>true));
+//unfollow a user by screen name or user id
+$friendship->unfollow(array('user_id'=>'1234','screen_name'=>'username'));
+```

@@ -34,7 +34,7 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('friendships/no_retweets/id.json',$params);
-        $this->friendship->getNoRetweets($params);
+        $this->friendship->retrieveNoRetweets($params);
     }
 
     /**
@@ -50,7 +50,7 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('friendships/no_retweets/id.json',$params);
-        $this->friendship->getNoRetweets($params);
+        $this->friendship->retrieveNoRetweets($params);
     }
 
    /**
@@ -64,7 +64,7 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('friends/ids.json');
-        $this->friendship->getFriends();
+        $this->friendship->retrieveFriends();
     }
 
     /**
@@ -79,7 +79,7 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('friends/ids.json',$params);
-        $this->friendship->getFriends($params);
+        $this->friendship->retrieveFriends($params);
     }
 
     /**
@@ -93,7 +93,7 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('followers/ids.json');
-        $this->friendship->getFollowers();
+        $this->friendship->retrieveFollowers();
     }
 
     /**
@@ -108,6 +108,92 @@ class FriendshipTest extends \PHPUnit_Framework_TestCase
         $this->friendship->expects($this->once())
             ->method('get')
             ->with('followers/ids.json',$params);
-        $this->friendship->getFollowers($params);
+        $this->friendship->retrieveFollowers($params);
+    }
+
+    /**
+     * @test
+     * Given a Friendship instance
+     * When follow is called with screen_name set
+     * Then the call should be made with post fields
+     */
+    public function FollowScreenName()
+    {
+        $params = array('screen_name'=>'test');
+        $this->friendship->expects($this->once())
+            ->method('post')
+            ->with('friendships/create.json',$params);
+        $this->friendship->follow($params);
+    }
+
+    /**
+     * @test
+     * Given a friendship instance
+     * When follow is called and user_id is set
+     * Then the call should be made with post fields
+     */
+    public function FollowUserId()
+    {
+        $params = array('user_id'=>'1234');
+        $this->friendship->expects($this->once())
+            ->method('post')
+            ->with('friendships/create.json',$params);
+        $this->friendship->follow($params);
+    }
+
+    /**
+     * @test
+     * Given a friendship instance
+     * When Follow is called an screen_name and user_id are not set
+     * Then an Exception should be thrown
+     * @expectedException \Exception
+     */
+    public function FollowThrowException()
+    {
+        $params = array('follow'=>false);
+        $this->friendship->follow($params);
+    }
+
+    /**
+     * @test
+     * Given a friendship instance
+     * When Unfollow is called with screen_name
+     * Then the post request should be made with post fields
+     */
+    public function UnfollowScreenName()
+    {
+        $params = array('screen_name'=>'test');
+        $this->friendship->expects($this->once())
+            ->method('post')
+            ->with('friendships/destroy.json',$params);
+        $this->friendship->unfollow($params);
+    }
+
+    /**
+     * @test
+     * Given a friendship instance
+     * When Unfollow is called with a user id
+     * Then the post request should be with post fields
+     */
+    public function UnfollowUserId()
+    {
+        $params = array('user_id'=>'1234');
+        $this->friendship->expects($this->once())
+            ->method('post')
+            ->with('friendships/destroy.json',$params);
+        $this->friendship->unfollow($params);
+    }
+
+    /**
+     * @test
+     * Given a friendship instance
+     * When unfollow is called with no screen name or user id
+     * Then an Exception should be thrown
+     * @expectedException \Exception
+     */
+    public function UnfollowException()
+    {
+        $params = array();
+        $this->friendship->unfollow($params);
     }
 }
