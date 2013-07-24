@@ -3,7 +3,6 @@ namespace Hapi\Twitter;
 use \Hapi\OAuth as OAuth;
 class Tweet extends Twitter
 {
-
     /**
      * @param $id
      * @return mixed

@@ -1,8 +1,9 @@
 <?php
 namespace Hapi\Twitter;
 use \Hapi\OAuth as OAuth;
+use \Hapi\Request as Request;
 
-class Twitter
+class Twitter implements Request\RequestInterface
 {
     protected $baseUrl = "https://api.twitter.com/1.1/";
     protected $header;

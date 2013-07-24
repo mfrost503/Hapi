@@ -63,4 +63,170 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->with('account/settings.json',$params);
         $this->user->updateProfile($params);
     }
+
+    /**
+     * @test
+     * Given a user instance
+     * When retrieveBlockedUsers is called with ids set to false
+     * Then the proper get request should be called
+     */
+    public function RetrieveBlockedUsersList()
+    {
+        $params = array('include_entities'=>true);
+        $this->user->expects($this->once())
+            ->method('get')
+            ->with('blocks/list.json',$params);
+        $this->user->retrieveBlockedUsers($params);
+    }
+
+    /**
+     * @test
+     * Given a user instance
+     * When retrieveBlockedUsers is called with ids set to true
+     * Then the proper get request should be called
+     */
+    public function RetrieveBlockedUsersIds()
+    {
+        $params = array('include_entities'=>true);
+        $this->user->expects($this->once())
+            ->method('get')
+            ->with('blocks/ids.json',$params);
+        $this->user->retrieveBlockedUsers($params,true);
+    }
+
+    /**
+     * @test
+     * Given a user instance
+     * When block is called with a user_id
+     * Then the proper get request should be made
+     */
+    public function BlockId()
+    {
+        $params = array('user_id'=>'1234');
+        $this->user->expects($this->once())
+            ->method('post')
+            ->with('blocks/create.json',$params);
+        $this->user->block($params);
+    }
+
+    /**
+     * @test
+     * Given a user instance
+     * When block is called with a screen_name
+     * Then the proper get request should be made
+     */
+    public function BlockScreenName()
+    {
+        $params = array('screen_name'=>'test');
+        $this->user->expects($this->once())
+            ->method('post')
+            ->with('blocks/create.json',$params);
+        $this->user->block($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When Block is called with no user_id/screen_name
+     * Then an \Exception should be thrown
+     * @expectedException \Exception
+     */
+    public function BlockException()
+    {
+        $params = array();
+        $this->user->block($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When unblock is called with a user_id
+     * Then the proper post request should be made
+     */
+    public function UnBlockId()
+    {
+        $params = array('user_id'=>'1234');
+        $this->user->expects($this->once())
+            ->method('post')
+            ->with('blocks/destroy.json',$params);
+        $this->user->unblock($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When unblock is called with a screen_name
+     * Then the proper post request should be made
+     */
+    public function UnBlockScreenName()
+    {
+        $params = array('screen_name'=>'test');
+        $this->user->expects($this->once())
+            ->method('post')
+            ->with('blocks/destroy.json',$params);
+        $this->user->unblock($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When unblock is called with no user_id or screen_name
+     * Then an exception should be thrown
+     * @expectedException \Exception
+     */
+    public function UnblockException()
+    {
+        $params = array();
+        $this->user->unblock($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When retrieveInfo is called with an id
+     * Then the correct get request should be called
+     */
+    public function RetrieveInfoId()
+    {
+        $params = array('screen_name'=>'test');
+        $this->user->expects($this->once())
+            ->method('get')
+            ->with('users/show.json',$params);
+        $this->user->retrieveInfo($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When retrieveInfo is called with a screen name
+     * Then the correct request should be called
+     */
+    public function RetrieveInfoScreenName()
+    {
+        $params = array('screen_name'=>'test');
+        $this->user->expects($this->once())
+            ->method('get')
+            ->with('users/show.json',$params);
+        $this->user->retrieveInfo($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When no user id or screen name is set
+     * Then an \Exception should be thrown
+     * @expectedException \Exception
+     */
+    public function RetrieveInfoException()
+    {
+        $params = array();
+        $this->user->retrieveInfo($params);
+    }
+
+    /**
+     * @test
+     * Given an instance of user
+     * When lookup is called with an id or comma separated list of ids
+     * Then the correct get request should be made
+     */
 }
