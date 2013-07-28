@@ -1,7 +1,7 @@
 <?php
 namespace Hapi\OAuth;
 
-class OAuthAccess
+class Access
 {
     /**
      * @var accessToken

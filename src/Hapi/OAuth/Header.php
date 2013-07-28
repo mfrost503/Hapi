@@ -1,7 +1,7 @@
 <?php
 namespace Hapi\OAuth;
 
-class OAuthHeader
+class Header
 {
     /**
      * @var OAuthAccess oauthAccess
@@ -36,7 +36,7 @@ class OAuthHeader
     private $requestUrl;
     private $callback='';
 
-    public function __construct(OAuthAccess $oauthAccess,OAuthConsumer $oauthConsumer)
+    public function __construct(Access $oauthAccess,Consumer $oauthConsumer)
     {
         $this->oauthAccess = $oauthAccess;
         $this->oauthConsumer = $oauthConsumer;

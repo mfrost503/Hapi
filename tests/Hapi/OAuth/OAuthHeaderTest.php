@@ -1,14 +1,14 @@
 <?php
 namespace Hapi\OAuth;
 
-class OAuthHeaderTest extends \PHPUnit_Framework_TestCase
+class HeaderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->consumer = $this->getMockBuilder('\Hapi\OAuth\OAuthConsumer',array('getConsumerSecret','getConsumerToken'))
+        $this->consumer = $this->getMockBuilder('\Hapi\OAuth\Consumer',array('getConsumerSecret','getConsumerToken'))
             ->disableOriginalConstructor()
             ->getMock();
-        $this->access = $this->getMockBuilder('\Hapi\OAuth\OAuthAccess',array('getAccessSecret','getAccessToken'))
+        $this->access = $this->getMockBuilder('\Hapi\OAuth\Access',array('getAccessSecret','getAccessToken'))
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -40,7 +40,7 @@ class OAuthHeaderTest extends \PHPUnit_Framework_TestCase
      */
     public function OAuthAuthorizationHeaderNoCallback()
     {
-        $header = new OAuthHeader($this->access,$this->consumer);
+        $header = new Header($this->access,$this->consumer);
         $header->setRequestUrl('https://api.twitter.com/1.1/statuses/retweets/12345.json');
         $authHeader = $header->getAuthHeader();
         $this->assertContains('oauth_token="bcde32145zr43123"',$authHeader);
@@ -64,7 +64,7 @@ class OAuthHeaderTest extends \PHPUnit_Framework_TestCase
      */
     public function OAuthAuthorizationHeaderCallback()
     {
-        $header = new OAuthHeader($this->access,$this->consumer);
+        $header = new Header($this->access,$this->consumer);
         $header->setRequestUrl('https://api.twitter.com/oauth/request_token');
         $header->setCallback('http://example.org/callback');
         $authHeader = $header->getAuthHeader();

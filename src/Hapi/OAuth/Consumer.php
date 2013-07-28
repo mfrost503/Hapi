@@ -1,7 +1,7 @@
 <?php
 namespace Hapi\OAuth;
 
-class OAuthConsumer
+class Consumer
 {
     /**
      * @var consumerKey
