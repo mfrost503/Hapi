@@ -18,7 +18,7 @@ class Tweet extends Twitter
     /**
      * @param array $tweet
      * @return mixed
-     * Takes an array of parameters and makes ap post request
+     * Takes an array of parameters and makes a post request
      * to update the status of authenticated user (creates a tweet)
      */
     public function tweet(Array $tweet)
