@@ -5,7 +5,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->header = $this->getMockBuilder('\Hapi\OAuth\OAuthHeader')
+        $this->header = $this->getMockBuilder('\Hapi\OAuth\Header')
             ->disableOriginalConstructor()
             ->getMock();
         $this->user = $this->getMock('\Hapi\Twitter\User',

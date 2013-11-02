@@ -5,7 +5,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 {
     public function setup()
     {
-        $this->header = $this->getMockBuilder('\Hapi\OAuth\OAuthHeader')
+        $this->header = $this->getMockBuilder('\Hapi\OAuth\Header')
             ->disableOriginalConstructor()
             ->getMock();
         $this->tweet = $this->getMock(
