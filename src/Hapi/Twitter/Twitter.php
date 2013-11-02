@@ -15,7 +15,7 @@ use \Hapi\Request as Request;
  */
 class Twitter extends Request\Request implements Request\RequestInterface
 {
-    public function __construct(OAuth\OAuthHeader $header)
+    public function __construct(OAuth\Header $header)
     {
         parent::__construct($header);
 	$this->setBaseUrl('https://api.twitter.com/1.1/');

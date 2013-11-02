@@ -25,7 +25,7 @@ class Request implements RequestInterface
      * The header property will be used to generate the OAuth header
      * required for request to be made to the API
      */
-    public function __construct(OAuth\OAuthHeader $header) {
+    public function __construct(OAuth\Header $header) {
         $this->header = $header;
     }
 
@@ -60,7 +60,7 @@ class Request implements RequestInterface
         curl_setopt($curl,CURLOPT_HEADER,true);
         curl_setopt($curl,CURLOPT_URL,$url);
         $response = curl_exec($curl);
-	$response = $this->processResponse($response);
+	    $response = $this->processResponse($response);
         curl_close($curl);
         return $response;
     }
@@ -109,18 +109,18 @@ class Request implements RequestInterface
     {
     	$responseHeader = array();
         $headers = explode("\r\n", $response);
-	// return the json/xml output - unaffected
-	$output = array_pop($headers);
-	// get rid of the blank line at the end of the headers
-	array_pop($headers);
-	foreach($headers as $header) {
-	    $colonPosition = strpos($header, ':');
-	    $key = substr($header, 0, $colonPosition);
-	    $value = substr($header, $colonPosition + 1);
-	    $responseHeader[$key] = trim($value);
-	}
-	$this->responseHeader = $responseHeader;
-	return $output;
+	    // return the json/xml output - unaffected
+	    $output = array_pop($headers);
+	    // get rid of the blank line at the end of the headers
+	    array_pop($headers);
+	    foreach($headers as $header) {
+	        $colonPosition = strpos($header, ':');
+	        $key = substr($header, 0, $colonPosition);
+	        $value = substr($header, $colonPosition + 1);
+	        $responseHeader[$key] = trim($value);
+	    }
+	    $this->responseHeader = $responseHeader;
+	    return $output;
     }
 
     public function setBaseUrl($url)

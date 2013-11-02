@@ -8,12 +8,11 @@ Getting started is pretty straight-forward, we take the consumer secret and acce
 header:
 ```php
 <?php
-namespace Hapi\OAuth;
 
-$oauthAccess = new OAuthAccess('<insert access_token>','<insert access_secret>');
-$oauthConsumer = new OAuthConsumer('<insert consumer_key>','<insert consumer_secret>');
+$oauthAccess = new OAuth\Access('<insert access_token>','<insert access_secret>');
+$oauthConsumer = new OAuth\Consumer('<insert consumer_key>','<insert consumer_secret>');
 
-$oauthHeader = new OAuthHeader($oauthAccess, $oauthConsumer);
+$oauthHeader = new OAuth\Header($oauthAccess, $oauthConsumer);
 /* If the call you are making requires a callback (request_token - for example) */
 $oauthHeader->setCallback('http://example.org/callback'); // your application callback url
 ```
